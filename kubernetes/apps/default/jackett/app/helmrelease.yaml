@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/jackett
-              tag: latest
+              tag: 0.24.1622
             env:
               HTTP_PORT: &port 9117
               TZ: Pacific/Auckland
