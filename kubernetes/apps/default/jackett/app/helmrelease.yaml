@@ -15,7 +15,7 @@ spec:
         containers:
           app:
             image:
-              repository: lscr.io/linuxserver/jackett
+              repository: ghcr.io/home-operations/jackett
               tag: latest
             env:
               HTTP_PORT: &port 9117
