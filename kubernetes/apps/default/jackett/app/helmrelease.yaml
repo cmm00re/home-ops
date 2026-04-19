@@ -1,44 +1,48 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: jackett
-  namespace: default
-spec:
-  interval: 15m
-  url: https://halkeye.github.io/helm-charts/jackett
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: jackett
 spec:
-  chart:
-    spec:
-      chart: jackett
-      version: "0.1.3"
-      sourceRef:
-        kind: HelmRepository
-        name: jackett
-      interval: 5m
+  chartRef:
+    kind: OCIRepository
+    name: jackett
+  interval: 1h
   values:
     controllers:
-      jackett:
-        strategy: Recreate
-        app:
-          image:
-            repository: linuxserver/jackett
-            tag: latest
-            pullPolicy: Always
+      echo:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: lscr.io/linuxserver/jackett
+              tag: latest
+            env:
+              HTTP_PORT: &port 9117
+              TZ: Pacific/Auckland
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 64Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
     service:
       app:
         ports:
           http:
-            port: 9117
+            port: *port
     serviceMonitor:
       app:
         endpoints:
-          - port: http
+          - port: 9117
     route:
       app:
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
@@ -48,5 +52,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-            - identifier: app
-              port: 9117
+              - identifier: app
+                port: *port
