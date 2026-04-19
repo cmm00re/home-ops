@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jackett
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: jackett
+  interval: 1h
+  values:
+    controllers:
+      jackett:
+        strategy: Recreate
+        app:
+          image:
+            repository: linuxserver/jackett
+            tag: latest
+            pullPolicy: Always
+    service:
+      app:
+        ports:
+          http:
+            port: 9117
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: http
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+            - identifier: app
+              port: 9117
