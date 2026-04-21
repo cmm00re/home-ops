@@ -9,7 +9,7 @@ spec:
       namespace: kube-system
       sectionName: https
   hostnames:
-    - "longhorn.${SECRET_DOMAIN}"
+    - "longhorn.cmmoore.tech"
   rules:
     - matches:
         - path:

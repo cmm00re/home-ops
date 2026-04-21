@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jackett-pv-test
+  name: jackett-pv
 spec:
   accessModes:
     - ReadWriteOnce
