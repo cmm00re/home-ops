@@ -1,0 +1,13 @@
+machine:
+  kernel:
+    modules:
+      - name: nbd
+      - name: iscsi_tcp
+      - name: iscsi_generic
+      - name: configfs
+
+customization:
+  systemExtensions:
+    officialExtensions:
+      - image: ghcr.io/siderolabs/iscsi-tools
+      - image: ghcr.io/siderolabs/util-linux-tools
