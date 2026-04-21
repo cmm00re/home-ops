@@ -8,3 +8,4 @@ components:
 resources:
   - ./longhorn/ks.yaml
   - ./pvs
+  - ./namespace.yaml
