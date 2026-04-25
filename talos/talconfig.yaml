@@ -20,10 +20,10 @@ cniConfig:
 nodes:
   - hostname: "node1"
     ipAddress: "192.168.5.101"
-    installDisk: "/dev/vda"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/b2c39cfaec0508c46e30a90dc10041c3cd6942bed31654e43933f8c0e6b0e428
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -39,10 +39,10 @@ nodes:
           ip: "192.168.5.125"
   - hostname: "node2"
     ipAddress: "192.168.5.102"
-    installDisk: "/dev/vda"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/b2c39cfaec0508c46e30a90dc10041c3cd6942bed31654e43933f8c0e6b0e428
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -58,10 +58,10 @@ nodes:
           ip: "192.168.5.125"
   - hostname: "node3"
     ipAddress: "192.168.5.103"
-    installDisk: "/dev/vda"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/b2c39cfaec0508c46e30a90dc10041c3cd6942bed31654e43933f8c0e6b0e428
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -79,6 +79,7 @@ nodes:
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-iscsi.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
